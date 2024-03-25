@@ -1,123 +1,102 @@
+import { join } from "path";
 import {
   ApiObject,
-  LanguagePluginConfig,
+  FileDescriptor,
+  FileTemplateModel,
+  PluginConfig,
   PluginMap,
   ProjectDescription,
+  Result,
+  TemplateSchemaMap,
   Texts,
 } from "@soapjs/soap-cli-common";
-import ConfigJson from "./config/config.json";
 import {
-  BasicProjectBuildStrategy,
+  TypeScriptFileDescriptorStrategy,
+  TypeScriptTemplateModelStrategy,
+  TemplateModelBuilder,
+  TemplateService,
+  TemplateRegistry,
+  setupBasicTemplates,
+} from "./common";
+import {
   ExpressProjectBuildStrategy,
-  NestProjectBuildStrategy,
-  AwsProjectBuildStrategy,
   ExpressProjectInitStrategy,
-  NestProjectInitStrategy,
-  AwsProjectInitStrategy,
-  BasicProjectInitStrategy,
-  TypeScriptFileOutputStrategy,
-  ExpressTemplateModelStrategy,
-  ExpressDependenciesTemplateModelFactory,
-  ExpressRouterTemplateModelFactory,
-  AwsDependenciesTemplateModelFactory,
-  AwsRouterTemplateModelFactory,
-  AwsTemplateModelStrategy,
-  BasicDependenciesTemplateModelFactory,
-  BasicRouterTemplateModelFactory,
-  BasicTemplateModelStrategy,
-  NestDependenciesTemplateModelFactory,
-  NestRouterTemplateModelFactory,
-  NestTemplateModelStrategy,
-} from "./strategies";
-import { IndexTemplateModelsFactory } from "./core";
-import { GeneralTemplateModelsFactory } from "./core/general-template-models.factory";
+  ExpressTemplateModelBuiler,
+  setupExpressTemplates,
+} from "./express";
+import ConfigJson from "./config/config.json";
 
-export * from "./core";
-export * from "./strategies";
-export * from "./templates";
+const templatesPath = `${process.cwd()}/.soap/templates/`;
+const templateRegistry = new TemplateRegistry();
 
-export const createTemplateModelStrategy = (...args: unknown[]) => ({
-  apply: (api: ApiObject, project: ProjectDescription) => {
-    if (project.web_framework === "express") {
-      return new ExpressTemplateModelStrategy(
-        new GeneralTemplateModelsFactory(),
-        new IndexTemplateModelsFactory(),
-        new ExpressDependenciesTemplateModelFactory(),
-        new ExpressRouterTemplateModelFactory()
-      ).apply(api, project);
-    }
+export const setupTemplates = async (project: ProjectDescription) => {
+  return TemplateService.fetch([
+    join(templatesPath, "basic"),
+    join(templatesPath, project.web_framework),
+  ]);
+};
 
-    if (project.web_framework === "nest") {
-      return new NestTemplateModelStrategy(
-        new GeneralTemplateModelsFactory(),
-        new IndexTemplateModelsFactory(),
-        new NestDependenciesTemplateModelFactory(),
-        new NestRouterTemplateModelFactory()
-      ).apply(api, project);
-    }
+export const createTemplateModels = (
+  obj: ApiObject,
+  project: ProjectDescription,
+  ...args: unknown[]
+): Result<FileTemplateModel[]> => {
+  let modelBuilder: TemplateModelBuilder;
 
-    if (project.web_framework === "aws") {
-      return new AwsTemplateModelStrategy(
-        new GeneralTemplateModelsFactory(),
-        new IndexTemplateModelsFactory(),
-        new AwsDependenciesTemplateModelFactory(),
-        new AwsRouterTemplateModelFactory()
-      ).apply(api, project);
-    }
+  if (project.web_framework === "express") {
+    modelBuilder = new ExpressTemplateModelBuiler(project);
+  }
+  return new TypeScriptTemplateModelStrategy(modelBuilder).apply(obj, project);
+};
 
-    return new BasicTemplateModelStrategy(
-      new GeneralTemplateModelsFactory(),
-      new IndexTemplateModelsFactory(),
-      new BasicDependenciesTemplateModelFactory(),
-      new BasicRouterTemplateModelFactory()
-    ).apply(api, project);
-  },
-});
+export const createFileDescriptors = (
+  models: FileTemplateModel[],
+  templates: TemplateSchemaMap,
+  project: ProjectDescription,
+  ...args: unknown[]
+): Promise<Result<FileDescriptor[]>> => {
+  setupBasicTemplates(templateRegistry, templates);
 
-export const createFileOutputStrategy = (...args: unknown[]) =>
-  new TypeScriptFileOutputStrategy();
-export const createProjectBuildStrategy = (
+  if (project.web_framework === "express") {
+    setupExpressTemplates(templateRegistry, templates);
+  }
+
+  return new TypeScriptFileDescriptorStrategy(templateRegistry).apply(
+    models,
+    project
+  );
+};
+
+export const buildProject = (
   texts: Texts,
   pluginMap: PluginMap,
+  templates: TemplateSchemaMap,
+  content: ProjectDescription,
   ...args: unknown[]
-) => ({
-  apply: (project: ProjectDescription) => {
-    if (project.web_framework === "express") {
-      return new ExpressProjectBuildStrategy(texts, pluginMap).apply(project);
-    }
+): Promise<Result> => {
+  if (content.web_framework === "express") {
+    return new ExpressProjectBuildStrategy(
+      texts,
+      pluginMap,
+      templateRegistry
+    ).apply(content);
+  }
+};
 
-    if (project.web_framework === "nest") {
-      return new NestProjectBuildStrategy(texts, pluginMap).apply(project);
-    }
-
-    if (project.web_framework === "aws") {
-      return new AwsProjectBuildStrategy(texts, pluginMap).apply(project);
-    }
-
-    return new BasicProjectBuildStrategy(texts, pluginMap).apply(project);
-  },
-});
-
-export const createProjectInitStrategy = (
+export const initProject = (
   texts: Texts,
   pluginMap: PluginMap,
+  templates: TemplateSchemaMap,
+  content: ProjectDescription,
   ...args: unknown[]
-) => ({
-  apply: (project: ProjectDescription) => {
-    if (project.web_framework === "express") {
-      return new ExpressProjectInitStrategy(texts, pluginMap).apply(project);
-    }
+): Promise<Result> => {
+  if (content.web_framework === "express") {
+    return new ExpressProjectInitStrategy(
+      texts,
+      pluginMap,
+      templateRegistry
+    ).apply(content);
+  }
+};
 
-    if (project.web_framework === "nest") {
-      return new NestProjectInitStrategy(texts, pluginMap).apply(project);
-    }
-
-    if (project.web_framework === "aws") {
-      return new AwsProjectInitStrategy(texts, pluginMap).apply(project);
-    }
-
-    return new BasicProjectInitStrategy(texts, pluginMap).apply(project);
-  },
-});
-
-export const Config: LanguagePluginConfig = ConfigJson;
+export const default_config: PluginConfig = ConfigJson;

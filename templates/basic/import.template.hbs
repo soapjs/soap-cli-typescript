@@ -1,0 +1,9 @@
+{{#if alias}}
+import * as {{alias}} from "{{path}}";
+{{else}}
+  {{#if dflt}}
+import {{dflt}}{{#if list}}, { {{~list~}} }{{/if}} from "{{path}}";
+  {{else}}
+import { {{~list~}} } from "{{path}}";
+  {{/if}}
+{{/if}}

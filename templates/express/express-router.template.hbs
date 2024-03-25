@@ -1,0 +1,11 @@
+import * as Soap from '@soapjs/soap';
+import { Config } from './config';
+{{~#each imports~}}
+{{{this}}}
+{{~/each~}}
+
+export class Router extends Soap.Router {
+  public configure({{{props}}}) {
+
+  }
+}

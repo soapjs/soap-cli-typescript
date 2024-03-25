@@ -1,0 +1,14 @@
+{{~#each routes~}}
+  {{#if this.use_controller}}
+    {{#if this.use_inversify}}
+    const {{this.controller_instance_name}} = container.get<{{this.controller_class_name}}>({{this.controller_class_name}}.Token);
+    {{else}}
+      {{#if this.use_singleton}}
+    const {{this.controller_instance_name}} = Soap.Singleton.get<{{this.controller_class_name}}>({{this.controller_class_name}}.Token);
+      {{else}}
+    const {{this.controller_instance_name}} = new {{this.controller_class_name}}();
+      {{/if}}
+    {{/if}}
+  {{/if}}
+  this.mount({{this.route_class_name}}.create({{this.controller_instance_name}}.{{this.handler_name}}.bind({{this.controller_instance_name}}), config));
+{{~/each~}}

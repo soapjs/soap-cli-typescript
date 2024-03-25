@@ -1,0 +1,11 @@
+{{#if is_declaration}}
+{{#if access}}{{access}} {{/if}}{{{name}}}{{#if generics}}<{{{generics}}}>{{/if}}({{{params}}}){{#if return_type}}:
+  {{{return_type}}}{{/if}};
+  {{else}}
+  {{#if access}}{{access}} {{/if}}{{#if is_abstract}}abstract {{/if}}{{#if is_static}}static {{/if}}{{#if
+  is_async}}async {{/if}}{{{name}}}{{#if generics}}<{{{generics}}}>{{/if}}({{{params}}}){{#if return_type}}:
+    {{#if is_async}}Promise<{{{return_type}}}>{{else}}{{{return_type}}}{{/if}}{{/if}} {
+    {{{supr}}}
+    {{{body}}}
+    }
+{{/if}}

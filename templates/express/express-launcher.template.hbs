@@ -1,0 +1,38 @@
+import * as Soap from '@soapjs/soap';
+import * as bodyParser from 'body-parser';
+import cors from 'cors';
+import * as express from 'express';
+{{~#each imports~}}
+{{{this}}}
+{{~/each~}}
+import { Router } from './router';
+import { Config } from './config';
+import { Dependencies } from './dependencies';
+
+const config = Config.create();
+
+const start = async () => {
+  const app = express();
+  /* app.use(
+    cors({
+      origin: '*',
+    })
+  ); */
+  app.use(bodyParser.json());
+  {{#if use_inversify}}
+  const container = new Container();
+  {{else}}
+  const container = new Soap.Container();
+  Soap.Singleton.bind('container', container);
+  {{/if}}
+  const dependencies = new Dependencies();
+  dependencies.configure(container, config);
+  const router = new Router(app);
+  router.configure(container, config);
+
+  app.listen(config.port, () => {
+    console.log(`Server is running at http://localhost:\${config.port}`);
+  });
+};
+
+start();

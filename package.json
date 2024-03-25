@@ -1,6 +1,6 @@
 {
   "name": "@soapjs/soap-cli-typescript",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "homepage": "https://docs.soapjs.com",
   "repository": "https://github.com/soapjs/soap-cli-typescript",
@@ -16,8 +16,10 @@
   "dependencies": {
     "@babel/parser": "^7.23.6",
     "@babel/traverse": "^7.23.7",
+    "@soapjs/soap-cli-common": "^0.0.4",
     "chalk": "4.1.2",
     "change-case": "4.1.2",
+    "handlebars": "^4.7.8",
     "ora": "4.0.2",
     "prettier": "^3.2.5"
   },

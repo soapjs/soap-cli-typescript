@@ -1,0 +1,19 @@
+{{#each decorators~}}
+{{{this}}}
+{{~/each}}
+{{#if export}}export {{#if default}}default {{/if}}{{/if}}{{#if abstract}}abstract {{/if}}class {{{name}}}{{#if generics}}
+<{{{generics}}}>{{/if}} {{#if inheritance}}extends {{{inheritance}}} {{/if}}{{#if interfaces}}implements {{{interfaces}}}{{/if}} {
+  {{~#each static_props~}}
+  {{{this}}}
+  {{~/each~}}
+  {{~#each static_methods~}}
+  {{{this}}}
+  {{~/each~}}
+  {{~#each props~}}
+  {{{this}}}
+  {{~/each~}}
+  {{#if ctor}}{{{ctor}}}{{/if}}
+  {{~#each methods~}}
+  {{{this}}}
+  {{~/each~}}
+}

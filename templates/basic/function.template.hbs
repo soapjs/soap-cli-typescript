@@ -1,0 +1,4 @@
+{{#if export}}export {{#if is_async}}async {{/if}}{{/if}}function {{{name}}}{{#if generics}}
+<{{{generics}}}>{{/if}}({{{params}}}){{#if return_type}}: {{#if is_async}}Promise<{{{return_type}}}>{{else}}{{{return_type}}}{{/if}}{{/if}} {
+  {{{body}}}
+}

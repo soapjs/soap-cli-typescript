@@ -1,0 +1,18 @@
+import * as Soap from '@soapjs/soap';
+{{~#each imports~}}
+{{{this}}}
+{{~/each~}}
+
+export class Config {
+  static create() {
+    const vars = new Soap.ConfigVars();
+    return new Config(3000);
+  }
+
+  private constructor(
+    public readonly port: number,
+    /*
+    public readonly ...
+    */
+  ){}
+}

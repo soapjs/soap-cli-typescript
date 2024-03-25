@@ -1,0 +1,11 @@
+import * as Soap from '@soapjs/soap';
+import { Config } from './config';
+{{~#each imports~}}
+{{{this}}}
+{{~/each~}}
+
+export class Dependencies {
+  public async configure({{{props}}}) {
+
+  }
+}

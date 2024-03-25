@@ -1,0 +1,75 @@
+{{~#each sources~}}
+const {{this.instance_name}} = await {{this.class_name}}.create(config);
+{{~/each~}}
+{{~#each bindings~}}
+{{#if this.is_repository}}
+  {{#if this.use_default_impl}}
+    const {{this.instance_name}} = new {{this.impl_base_class_name}}<{{this.entity_class_name}}>(
+      {{#each this.contexts}}
+      {
+        {{#if this.use_default_collection}}
+        collection: new {{this.collection_base_class_name}}<{{this.model_class_name}}>({{this.source_instance_name}},'{{this.table}}'),
+        {{else}}
+        collection: new {{this.collection_class_name}}({{this.source_instance_name}}),
+        {{/if}}
+        mapper: new {{this.mapper_class_name}}(),
+        queries: new {{this.query_factory_class_name}}(),
+      },
+      {{/each}}
+    );
+  {{else}}
+    const {{this.instance_name}} = new {{this.impl_class_name}}(
+      {{#each this.contexts}}
+      {
+        {{#if this.use_default_collection}}
+        collection: new {{this.collection_base_class_name}}<{{this.model_class_name}}>
+        ({{this.source_instance_name}},'{{this.table}}'),
+        {{else}}
+        collection: new {{this.collection_class_name}}({{this.source_instance_name}}),
+        {{/if}}
+        mapper: new {{this.mapper_class_name}}(),
+        queries: new {{this.query_factory_class_name}}(),
+        },
+      {{/each}}
+    );
+  {{/if}}
+  {{#if this.use_inversify}}
+    container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue({{this.instance_name}});
+  {{/if}}
+  {{#if this.use_singleton}}
+    Singleton.bind({{this.class_name}}.Token, {{this.instance_name}});
+  {{/if}}
+{{/if}}
+{{#if this.is_service}}
+  {{#if this.use_inversify}}
+  container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue(new {{this.impl_class_name}}());
+  {{/if}}
+  {{#if this.use_singleton}}
+    Singleton.bind({{this.class_name}}.Token, new {{this.impl_class_name}}());
+  {{/if}}
+{{/if}}
+{{#if this.is_controller}}
+  {{#if this.use_inversify}}
+    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+  {{/if}}
+  {{#if this.use_singleton}}
+    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+  {{/if}}
+{{/if}}
+{{#if this.is_use_case}}
+  {{#if this.use_inversify}}
+    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+  {{/if}}
+  {{#if this.use_singleton}}
+    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+  {{/if}}
+{{/if}}
+{{#if this.is_toolset}}
+  {{#if this.use_inversify}}
+    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+  {{/if}}
+  {{#if this.use_singleton}}
+    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+  {{/if}}
+{{/if}}
+{{~/each~}}

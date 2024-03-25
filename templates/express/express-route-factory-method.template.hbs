@@ -1,0 +1,53 @@
+public static {{{name}}}(handler: Soap.RouteHandler, config: Soap.Config): {{route}} {
+  return new {{route}}(
+    "{{path}}",
+    handler{{#if use_options}},
+    {
+      {{#if io}} io: new {{io}}(),{{/if}}
+      {{#if use_authorization}}
+        authorization: {
+          {{#each authorization}}
+          {{{this}}},
+          {{/each}}
+          /*
+          {{#each authorization_comments}}
+          {{{this}}}
+          {{/each}}
+          */
+        },
+        {{/if}}
+      {{#if use_validator}} validator: {
+        validator: {{{validator.validator}}},
+        schema: {{validator.schema}},
+      },{{/if}}
+      {{#if use_cors}}
+        cors: {
+          {{#each cors}}
+          {{{this}}},
+          {{/each}}
+          /*
+          {{#each cors_comments}}
+          {{{this}}}
+          {{/each}}
+          */
+        },{{/if}}
+      {{#if use_limiter}}
+        limiter: {
+          {{#each limiter}}
+          {{{this}}},
+          {{/each}}
+          /*
+          {{#each limiter_comments}}
+          {{{this}}}
+          {{/each}}
+          */
+        },{{/if}}
+       middlewares: [
+        {{#each middlewares}}
+        {{{this}}},
+        {{/each}}
+      ]
+    }
+    {{/if}}
+    );
+}

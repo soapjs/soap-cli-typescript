@@ -1,0 +1,9 @@
+{{#if alias}}
+{{#if is_exportable}}export {{#if is_default}}default {{/if}}{{/if}}type {{{name}}}{{#if generics}}<{{{generics}}}>{{/if}} = {{{alias}}};
+{{else}}
+{{#if is_exportable}}export {{#if is_default}}default {{/if}}{{/if}}type {{{name}}}{{#if generics}}<{{{generics}}}>{{/if}} = {
+{{~#each props~}}
+{{{this}}}
+{{~/each~}}
+};
+{{/if}}

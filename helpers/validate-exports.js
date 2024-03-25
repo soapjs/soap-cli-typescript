@@ -10,11 +10,12 @@ fs.readFile(filePath, 'utf8', (err, data) => {
 
   let failed = false;
 
-  ['createTemplateModelStrategy',
-    'createFileOutputStrategy',
-    'createProjectBuildStrategy',
-    'createProjectInitStrategy',
-    'Config',
+  ['createTemplateModels',
+    'createFileDescriptors',
+    'buildProject',
+    'initProject',
+    'setupTemplates',
+    'default_config',
   ].forEach(exportName => {
     if (
       data.includes(`export declare const ${exportName}`) === false

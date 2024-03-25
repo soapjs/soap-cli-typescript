@@ -1,0 +1,8 @@
+{{#if export}}export {{/if}}interface {{{name}}}{{#if generics}}<{{{generics}}}>{{/if}} {{#if inheritance}}extends {{{inheritance}}}{{/if}} {
+  {{~#each props~}}
+  {{{this}}}
+  {{~/each~}}
+  {{~#each methods~}}
+  {{{this}}}
+  {{~/each~}}
+}
