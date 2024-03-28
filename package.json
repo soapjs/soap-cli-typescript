@@ -1,7 +1,7 @@
 {
-  "name": "@soapjs/soap-cli-typescript",
+  "name": "nt",
   "version": "0.0.1",
-  "description": "",
+  "description": "Basic classes, types, templates to generate code for TypeScript projects with SoapJS",
   "homepage": "https://docs.soapjs.com",
   "repository": "https://github.com/soapjs/soap-cli-typescript",
   "main": "build/index.js",
