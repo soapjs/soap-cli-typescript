@@ -1,15 +1,44 @@
-import * as Soap from '@soapjs/soap';
-import * as bodyParser from 'body-parser';
-import cors from 'cors';
-import * as express from 'express';
 {{~#each imports~}}
 {{{this}}}
 {{~/each~}}
+import * as Soap from '@soapjs/soap';
+import { SoapExpressServer } from '@soapjs/soap-express';
 import { Router } from './router';
 import { Config } from './config';
 import { Dependencies } from './dependencies';
 
 const config = Config.create();
+const server = new SoapExpressServer(config);
+// Create ioc container
+{{#if use_inversify}}
+const container = new Container();
+{{else if use_singleton}}
+const container = new Soap.Container();
+Soap.Singleton.bind('container', container);
+{{else}}
+const container: any = {};
+{{/if}}
+// Create dependencies
+const dependencies = new Dependencies(container);
+dependencies.configure();
+// Create router
+const router = new Router(server.app, container, config);
+router.configure();
+
+// Run server
+server.start();
+
+
+
+
+
+
+
+
+
+
+
+
 
 const start = async () => {
   const app = express();

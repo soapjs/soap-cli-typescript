@@ -631,7 +631,7 @@
               "exp": true,
               "inheritance": [
                 {
-                  "name": "Soap.Router"
+                  "name": "SoapExpressRouter"
                 }
               ],
               "methods": [
@@ -646,6 +646,10 @@
                 {
                   "alias": "Soap",
                   "path": "@soapjs/soap"
+                },
+                {
+                  "alias": "SoapExpressRouter",
+                  "path": "@soapjs/soap-express"
                 }
               ]
             }
@@ -669,11 +673,20 @@
               ],
               "imports": [
                 {
+                  "alias": "Soap",
+                  "path": "@soapjs/soap"
+                },
+                {
                   "meta": "{{FLAG isDefaultRepositoryImpl}}",
                   "list": [
                     "RepositoryImpl"
                   ],
                   "path": "@soapjs/soap"
+                }
+              ],
+              "interfaces": [
+                {
+                  "name": "Soap.Dependencies"
                 }
               ]
             },

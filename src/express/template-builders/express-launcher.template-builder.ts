@@ -3,6 +3,7 @@ import { TemplateBuilder } from "../../common/template-registry";
 
 export type ExpressLauncherTemplateContext = {
   use_inversify: boolean;
+  use_singleton: boolean;
   imports: string[];
 };
 
@@ -12,6 +13,7 @@ export class ExpressLauncherTemplateBuilder extends TemplateBuilder {
   build(project: ProjectDescription): string {
     const context: ExpressLauncherTemplateContext = {
       use_inversify: project.ioc === "inversify",
+      use_singleton: project.ioc === "singleton",
       imports: [],
     };
 

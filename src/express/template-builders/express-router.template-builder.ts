@@ -14,22 +14,22 @@ export class ExpressRouterTemplateBuilder extends TemplateBuilder {
 
   build(project: ProjectDescription): string {
     const imports = [];
-    const props = [];
+    const params = [];
 
     if (project.ioc === "inversify") {
       imports.push(`import { Container } from 'inversify';`);
-      props.push("container: Container");
+      params.push("protected container: Container");
     } else if (project.ioc === "singleton") {
-      props.push("container: Soap.Container");
+      params.push("protected container: Soap.Container");
     } else {
-      props.push("container: any");
+      params.push("protected container: any");
     }
 
-    props.push("config: Config");
+    params.push("protected config: Config");
 
     return this.template({
       imports,
-      props: props.join(", "),
+      params: params.join(", "),
     });
   }
 }

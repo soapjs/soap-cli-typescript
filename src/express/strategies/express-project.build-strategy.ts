@@ -5,10 +5,10 @@ import { mkdir, writeFile } from "fs/promises";
 import { TemplateService, execAsync } from "../../common";
 
 import { TypeScriptProjectBuildStrategy } from "../../common/strategies/typescript-project.build-strategy";
-import { ExpressLauncherTemplateBuilder } from "../templates/express-launcher.template-builder";
-import { ExpressRouterTemplateBuilder } from "../templates/express-router.template";
-import { ExpressDependenciesTemplate } from "../templates/express-dependencies.template-builder";
-import { ExpressConfigTemplateBuilder } from "../templates/express-config.template-builder";
+import { ExpressLauncherTemplateBuilder } from "../template-builders/express-launcher.template-builder";
+import { ExpressRouterTemplateBuilder } from "../template-builders/express-router.template-builder";
+import { ExpressDependenciesTemplate } from "../template-builders/express-dependencies.template-builder";
+import { ExpressConfigTemplateBuilder } from "../template-builders/express-config.template-builder";
 
 export class ExpressProjectBuildStrategy extends TypeScriptProjectBuildStrategy {
   async initProject(project: ProjectDescription) {

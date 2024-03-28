@@ -4,8 +4,10 @@ import { Config } from './config';
 {{{this}}}
 {{~/each~}}
 
-export class Dependencies {
-  public async configure({{{props}}}) {
+export class Dependencies implements Soap.Dependencies {
+  constructor({{{params}}}) {}
+
+  public async configure() {
 
   }
 }

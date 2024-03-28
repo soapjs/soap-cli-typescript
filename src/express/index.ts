@@ -1,20 +1,20 @@
 import { TemplateSchemaMap } from "@soapjs/soap-cli-common";
 import { TemplateRegistry } from "../common";
-import { ExpressConfigTemplateBuilder } from "./templates/express-config.template-builder";
-import { ExpressDependencyBindTemplateBuilder } from "./templates/express-dependency-bind.template-builder";
-import { ExpressRouteBindTemplateBuilder } from "./templates/express-route-bind.template-builder";
-import { ExpressRouteFactoryMethodTemplateBuilder } from "./templates/express-route-factory-method.template-builder";
+import { ExpressConfigTemplateBuilder } from "./template-builders/express-config.template-builder";
+import { ExpressDependencyBindTemplateBuilder } from "./template-builders/express-dependency-bind.template-builder";
+import { ExpressRouteBindTemplateBuilder } from "./template-builders/express-route-bind.template-builder";
+import { ExpressRouteFactoryMethodTemplateBuilder } from "./template-builders/express-route-factory-method.template-builder";
 
 export * from "./models/express.template-model.builder";
 export * from "./strategies/express-project.build-strategy";
 export * from "./strategies/express-project.init-strategy";
-export * from "./templates/express-config.template-builder";
-export * from "./templates/express-dependencies.template-builder";
-export * from "./templates/express-dependency-bind.template-builder";
-export * from "./templates/express-launcher.template-builder";
-export * from "./templates/express-route-bind.template-builder";
-export * from "./templates/express-route-factory-method.template-builder";
-export * from "./templates/express-router.template";
+export * from "./template-builders/express-config.template-builder";
+export * from "./template-builders/express-dependencies.template-builder";
+export * from "./template-builders/express-dependency-bind.template-builder";
+export * from "./template-builders/express-launcher.template-builder";
+export * from "./template-builders/express-route-bind.template-builder";
+export * from "./template-builders/express-route-factory-method.template-builder";
+export * from "./template-builders/express-router.template-builder";
 
 export const setupExpressTemplates = (
   templateRegistry: TemplateRegistry,

@@ -25,8 +25,8 @@ import {
   TypeScriptImportInfo,
 } from "../../common";
 import { existsSync } from "fs";
-import { ExpressDependencyBindTemplateBuilder } from "../templates/express-dependency-bind.template-builder";
-import { ExpressRouteBindTemplateBuilder } from "../templates/express-route-bind.template-builder";
+import { ExpressDependencyBindTemplateBuilder } from "../template-builders/express-dependency-bind.template-builder";
+import { ExpressRouteBindTemplateBuilder } from "../template-builders/express-route-bind.template-builder";
 import { dirname, join, relative, basename, extname } from "path";
 
 export class ExpressTemplateModelBuiler implements TemplateModelBuilder {

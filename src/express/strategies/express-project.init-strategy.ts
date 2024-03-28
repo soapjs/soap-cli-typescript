@@ -3,10 +3,10 @@ import { TypeScriptProjectInitStrategy } from "../../common/strategies/typescrip
 import { ProjectDescription, Result } from "@soapjs/soap-cli-common";
 import { existsSync } from "fs";
 import { join } from "path";
-import { ExpressLauncherTemplateBuilder } from "../templates/express-launcher.template-builder";
-import { ExpressRouterTemplateBuilder } from "../templates/express-router.template";
-import { ExpressDependenciesTemplate } from "../templates/express-dependencies.template-builder";
-import { ExpressConfigTemplateBuilder } from "../templates/express-config.template-builder";
+import { ExpressLauncherTemplateBuilder } from "../template-builders/express-launcher.template-builder";
+import { ExpressRouterTemplateBuilder } from "../template-builders/express-router.template-builder";
+import { ExpressDependenciesTemplate } from "../template-builders/express-dependencies.template-builder";
+import { ExpressConfigTemplateBuilder } from "../template-builders/express-config.template-builder";
 import { TemplateService } from "../../common";
 
 export class ExpressProjectInitStrategy extends TypeScriptProjectInitStrategy {

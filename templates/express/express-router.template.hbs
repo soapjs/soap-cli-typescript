@@ -4,8 +4,9 @@ import { Config } from './config';
 {{{this}}}
 {{~/each~}}
 
-export class Router extends Soap.Router {
-  public configure({{{props}}}) {
+export class Router extends SoapExpressRouter {
+  constructor({{{params}}})
+  public configure() {
 
   }
 }

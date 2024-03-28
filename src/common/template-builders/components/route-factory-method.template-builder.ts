@@ -3,7 +3,7 @@ import {
   ProjectDescription,
 } from "@soapjs/soap-cli-common";
 import { TemplateBuilder } from "../../template-registry";
-import { ExpressRouteFactoryMethodTemplateBuilder } from "../../../express/templates/express-route-factory-method.template-builder";
+import { ExpressRouteFactoryMethodTemplateBuilder } from "../../../express/template-builders/express-route-factory-method.template-builder";
 
 export class RouteFactoryMethodTemplateBuilder extends TemplateBuilder {
   public static TemplateName = `route-factory-method`;

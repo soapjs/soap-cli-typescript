@@ -1,5 +1,5 @@
 {{~#each sources~}}
-const {{this.instance_name}} = await {{this.class_name}}.create(config);
+const {{this.instance_name}} = await {{this.class_name}}.create(this.config);
 {{~/each~}}
 {{~#each bindings~}}
 {{#if this.is_repository}}
@@ -34,42 +34,42 @@ const {{this.instance_name}} = await {{this.class_name}}.create(config);
     );
   {{/if}}
   {{#if this.use_inversify}}
-    container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue({{this.instance_name}});
+    this.container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue({{this.instance_name}});
   {{/if}}
   {{#if this.use_singleton}}
-    Singleton.bind({{this.class_name}}.Token, {{this.instance_name}});
+    this.container.bind({{this.class_name}}.Token, {{this.instance_name}});
   {{/if}}
 {{/if}}
 {{#if this.is_service}}
   {{#if this.use_inversify}}
-  container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue(new {{this.impl_class_name}}());
+  this.container.bind<{{this.class_name}}>({{this.class_name}}.Token).toConstantValue(new {{this.impl_class_name}}());
   {{/if}}
   {{#if this.use_singleton}}
-    Singleton.bind({{this.class_name}}.Token, new {{this.impl_class_name}}());
+    this.container.bind({{this.class_name}}.Token, new {{this.impl_class_name}}());
   {{/if}}
 {{/if}}
 {{#if this.is_controller}}
   {{#if this.use_inversify}}
-    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+    this.container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
   {{/if}}
   {{#if this.use_singleton}}
-    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+    this.container.bind({{this.class_name}}.Token, {{this.class_name}});
   {{/if}}
 {{/if}}
 {{#if this.is_use_case}}
   {{#if this.use_inversify}}
-    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+    this.container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
   {{/if}}
   {{#if this.use_singleton}}
-    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+    this.container.bind({{this.class_name}}.Token, {{this.class_name}});
   {{/if}}
 {{/if}}
 {{#if this.is_toolset}}
   {{#if this.use_inversify}}
-    container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
+    this.container.bind<{{this.class_name}}>({{this.class_name}}.Token).to({{this.class_name}});
   {{/if}}
   {{#if this.use_singleton}}
-    Singleton.bind({{this.class_name}}.Token, {{this.class_name}});
+    this.container.bind({{this.class_name}}.Token, {{this.class_name}});
   {{/if}}
 {{/if}}
 {{~/each~}}

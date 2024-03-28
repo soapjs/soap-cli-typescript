@@ -10,14 +10,14 @@ export class ExpressDependenciesTemplate extends TemplateBuilder {
 
     if (project.ioc === "inversify") {
       imports.push(`import { Container } from 'inversify';`);
-      props.push("container: Container");
+      props.push("protected container: Container");
     } else if (project.ioc === "singleton") {
-      props.push("container: Soap.Container");
+      props.push("protected container: Soap.Container");
     } else {
-      props.push("container: any");
+      props.push("protected container: any");
     }
 
-    props.push("config: Config");
+    props.push("protected config: Config");
 
     return this.template({
       imports,
