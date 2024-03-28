@@ -101,6 +101,8 @@ There is still much to do, including code for NestJS and AWS Lambdas, which will
 
 This package is not used directly and does not need to be manually installed, but it's worth getting acquainted with because templates and TypeScript configurations from this package are copied to the `.soap` directory in the project. Users may change the template code and configurations in their project; however, these changes will only work within that specific project and not globally.
 
+Additionally, it's important to note the list of plugins available for TypeScript, which is defined in the JSON file at [https://github.com/soapjs/soap-cli-config/blob/main/plugin-map.json](https://github.com/soapjs/soap-cli-config/blob/main/plugin-map.json). This list dictates the plugins to be fetched and utilized in conjunction with this package.
+
 ## Issues
 If you encounter any issues, please feel free to report them [here](https://github.com/soapjs/soap/issues/new/choose).
 
