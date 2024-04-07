@@ -1,11 +1,29 @@
 import * as Soap from '@soapjs/soap';
+import { SoapExpressRouter } from '@soapjs/soap-express';
+import { Express } from "express";
 import { Config } from './config';
+{{#if use_inversify}}
+import { Container } from "inversify";
+{{/if}}
 {{~#each imports~}}
 {{{this}}}
 {{~/each~}}
 
 export class Router extends SoapExpressRouter {
-  constructor({{{params}}})
+  constructor(
+    framework: Express,
+    {{#if use_inversify}}
+    container: Container,
+    {{else if use_singleton}}
+    container: Soap.Container,
+    {{else}}
+    container: any,
+    {{/if}}
+    config: Config
+  ){
+    super(framework, container, config);
+  }
+
   public configure() {
 
   }

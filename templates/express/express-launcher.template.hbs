@@ -1,67 +1,36 @@
-{{~#each imports~}}
-{{{this}}}
-{{~/each~}}
+{{#if use_inversify}}
+import 'reflect-metadata';
+{{/if}}
 import * as Soap from '@soapjs/soap';
 import { SoapExpressServer } from '@soapjs/soap-express';
+{{#if use_inversify}}
+import { Container } from 'inversify';
+{{/if}}
 import { Router } from './router';
 import { Config } from './config';
 import { Dependencies } from './dependencies';
 
-const config = Config.create();
-const server = new SoapExpressServer(config);
-// Create ioc container
-{{#if use_inversify}}
-const container = new Container();
-{{else if use_singleton}}
-const container = new Soap.Container();
-Soap.Singleton.bind('container', container);
-{{else}}
-const container: any = {};
-{{/if}}
-// Create dependencies
-const dependencies = new Dependencies(container);
-dependencies.configure();
-// Create router
-const router = new Router(server.app, container, config);
-router.configure();
-
-// Run server
-server.start();
-
-
-
-
-
-
-
-
-
-
-
-
-
 const start = async () => {
-  const app = express();
-  /* app.use(
-    cors({
-      origin: '*',
-    })
-  ); */
-  app.use(bodyParser.json());
+  const config = Config.create();
+  const server = new SoapExpressServer(config);
+  // Create IoC container
   {{#if use_inversify}}
   const container = new Container();
-  {{else}}
+  {{else if use_singleton}}
   const container = new Soap.Container();
   Soap.Singleton.bind('container', container);
+  {{else}}
+  const container: any = {};
   {{/if}}
-  const dependencies = new Dependencies();
-  dependencies.configure(container, config);
-  const router = new Router(app);
-  router.configure(container, config);
-
-  app.listen(config.port, () => {
-    console.log(`Server is running at http://localhost:\${config.port}`);
-  });
+  // Create dependencies
+  const dependencies = new Dependencies(container, config);
+  await dependencies.configure();
+  // Create router
+  const router = new Router(server.app, container, config);
+  router.configure();
+  
+  // Run server
+  server.start();
 };
 
 start();

@@ -198,7 +198,7 @@ export class TypeScriptFileReader {
     try {
       const ast = parse(file.rawCode, {
         sourceType: "module",
-        plugins: ["typescript"],
+        plugins: ["typescript", "decorators"],
         strictMode: false,
         errorRecovery: true,
         attachComment: true,

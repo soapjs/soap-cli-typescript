@@ -477,7 +477,7 @@
         },
         "route_model": {
           "name_pattern": "{{pascal name}}{{pascal type}}Model",
-          "path_pattern": "{{root}}/endpoints/{{kebab endpoint}}/routes/{{kebab name}}.route-model.ts",
+          "path_pattern": "{{root}}/endpoints/{{kebab endpoint}}/routes/{{kebab route}}.route-model.ts",
           "element_type": "type",
           "defaults": {
             "common": {

@@ -60,6 +60,7 @@ export class ExpressDependencyBindTemplateBuilder extends TemplateBuilder {
           query_factory: query_factory_class_name,
           collection: collection_class_name,
           collection_base_class: collection_base_class_name,
+          is_custom_collection,
           source,
           table,
           type,
@@ -76,7 +77,7 @@ export class ExpressDependencyBindTemplateBuilder extends TemplateBuilder {
         }
 
         contexts.push({
-          use_default_collection: !collection_class_name,
+          use_default_collection: is_custom_collection === false,
           collection_base_class_name,
           collection_class_name,
           model_class_name,

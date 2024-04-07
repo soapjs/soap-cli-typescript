@@ -4,7 +4,7 @@ const {{this.instance_name}} = await {{this.class_name}}.create(this.config);
 {{~#each bindings~}}
 {{#if this.is_repository}}
   {{#if this.use_default_impl}}
-    const {{this.instance_name}} = new {{this.impl_base_class_name}}<{{this.entity_class_name}}>(
+    const {{this.instance_name}} = new Soap.{{this.impl_base_class_name}}<{{this.entity_class_name}}>(
       {{#each this.contexts}}
       {
         {{#if this.use_default_collection}}

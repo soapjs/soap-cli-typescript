@@ -1,13 +1,23 @@
 import * as Soap from '@soapjs/soap';
+{{#if use_inversify}}
+import { Container } from "inversify";
+{{/if}}
 import { Config } from './config';
 {{~#each imports~}}
 {{{this}}}
 {{~/each~}}
 
 export class Dependencies implements Soap.Dependencies {
-  constructor({{{params}}}) {}
+  constructor(
+    {{#if use_inversify}}
+    protected container: Container,
+    {{else if use_singleton}}
+    protected container: Soap.Container,
+    {{else}}
+    protected container: any,
+    {{/if}}
+    protected config: Config
+  ) {}
 
-  public async configure() {
-
-  }
+  public async configure() {}
 }

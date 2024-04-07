@@ -5,7 +5,7 @@ import { ExpressDependencyBindTemplateBuilder } from "./template-builders/expres
 import { ExpressRouteBindTemplateBuilder } from "./template-builders/express-route-bind.template-builder";
 import { ExpressRouteFactoryMethodTemplateBuilder } from "./template-builders/express-route-factory-method.template-builder";
 
-export * from "./models/express.template-model.builder";
+export * from "./template-model-builders/express.template-model.builder";
 export * from "./strategies/express-project.build-strategy";
 export * from "./strategies/express-project.init-strategy";
 export * from "./template-builders/express-config.template-builder";
